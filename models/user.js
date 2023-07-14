@@ -51,9 +51,6 @@ class User {
 
   static async authenticate(username, password) {
 
-    console.log(username)
-    console.log(password)
-
     const results = await db.query(
       `SELECT username, password 
        FROM users
