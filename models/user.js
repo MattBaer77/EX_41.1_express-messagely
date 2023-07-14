@@ -129,8 +129,20 @@ class User {
 
   static async messagesFrom(username) {
 
-    
+    const results = await db.query(
+      `SELECT m.id, m.to_username, m.body, m.sent_at, m.read_at, u.username, u.first_name, u.last_name, u.phone
+      FROM messages as m
+      JOIN users as u
+      ON m.to_username = u.username
+      WHERE from_username = $1;`,
+      [username]
+    )
 
+    const resultsSorted = results.rows.map(r => {
+      return { id: r.id, to_user: {username: r.username, first_name: r.first_name, last_name: r.last_name, phone: r.phone}, body: r.body, sent_at: r.sent_at, read_at: r.read_at }
+    })
+
+    return resultsSorted
 
   }
 
@@ -142,7 +154,24 @@ class User {
    *   {username, first_name, last_name, phone}
    */
 
-  static async messagesTo(username) { }
+  static async messagesTo(username) {
+
+    const results = await db.query(
+      `SELECT m.id, m.from_username, m.body, m.sent_at, m.read_at, u.username, u.first_name, u.last_name, u.phone
+      FROM messages as m
+      JOIN users as u
+      ON m.from_username = u.username
+      WHERE to_username = $1;`,
+      [username]
+    )
+
+    const resultsSorted = results.rows.map(r => {
+      return { id: r.id, from_user: {username: r.username, first_name: r.first_name, last_name: r.last_name, phone: r.phone}, body: r.body, sent_at: r.sent_at, read_at: r.read_at }
+    })
+
+    return resultsSorted
+
+  }
 }
 
 

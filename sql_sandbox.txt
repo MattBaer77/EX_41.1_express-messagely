@@ -2,3 +2,12 @@
 
 SELECT username, first_name, last_name, phone
 FROM users;
+
+SELECT * FROM messages
+WHERE from_username = 'user1';
+
+SELECT m.id, m.to_username, m.body, m.sent_at, m.read_at, u.username, u.first_name, u.last_name, u.phone
+FROM messages as m
+JOIN users as u
+ON m.to_username = u.username
+WHERE from_username = 'user1';
