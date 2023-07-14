@@ -127,7 +127,12 @@ class User {
    *   {username, first_name, last_name, phone}
    */
 
-  static async messagesFrom(username) { }
+  static async messagesFrom(username) {
+
+    
+
+
+  }
 
   /** Return messages to this user.
    *
