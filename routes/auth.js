@@ -16,26 +16,27 @@ const { SECRET_KEY } = require("../config");
 
 router.post("/login", async function(req, res, next) {
 
-    const {username, password} = req.body;
-
-    if (!username || !password) {
-
-        throw new ExpressError("Bad request body. Must be formatted - {username, password}", 400);
-
-    }
-
     try {
+
+        if (!req.body.username || !req.body.password) {
+
+            throw new ExpressError("Bad request body. Must be formatted - {username, password}", 400)
+        }
+
+        const {username, password} = req.body
 
         const authenticatedUser = await User.authenticate(username, password)
 
         if (authenticatedUser) {
 
-            const token = jwt.sign(username, SECRET_KEY);
+            const token = jwt.sign({username}, SECRET_KEY);
             return res.json({message: "User Logged In", token})
 
-        }
+        } else {
 
-        throw new ExpressError("Incorrect username or password", 400)
+            throw new ExpressError("Incorrect username or password", 400)
+
+        }
 
     } catch(e){
 
@@ -55,19 +56,19 @@ router.post("/login", async function(req, res, next) {
 
 router.post("/register", async function(req, res, next) {
 
-    const {username, password, first_name, last_name, phone} = req.body;
-
-    if (!username || !password || !first_name || !last_name || !phone) {
-
-        throw new ExpressError("Bad request body. Must be formatted - {username, password, first_name, last_name, phone}", 400);
-
-    }
-
     try {
+
+        if (!req.body.username || !req.body.password || !req.body.first_name || !req.body.last_name || !req.body.phone) {
+
+            throw new ExpressError("Bad request body. Must be formatted - {username, password, first_name, last_name, phone}", 400);
+    
+        }
+
+        const {username, password, first_name, last_name, phone} = req.body;
 
         const registrant = await User.register(req.body);
 
-        const token = jwt.sign(registrant.username, SECRET_KEY);
+        const token = jwt.sign({username:registrant.username}, SECRET_KEY);
 
         return res.json({message: "User Created", token})
 

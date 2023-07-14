@@ -57,6 +57,12 @@ class User {
        WHERE username = $1`,
       [username]);
 
+    if (results.rows.length === 0) {
+
+      throw new ExpressError("Incorrect username or password", 400)
+
+    }
+
     const user = results.rows[0];
 
     const resp = bcrypt.compare(password, user.password)
