@@ -33,21 +33,9 @@ class User {
   static async register({username, password, first_name, last_name, phone}) {
 
     const timeStamp = new Date
-
     const join_at = timeStamp
     const last_login_at = join_at;
-
-    console.log(username)
-    console.log(password)
-    console.log(first_name)
-    console.log(last_name)
-    console.log(phone)
-    console.log(join_at)
-    console.log(last_login_at)
-
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
-
-    console.log(hashedPassword)
 
     const results = await db.query(`
       INSERT INTO users (username, password, first_name, last_name, phone, join_at, last_login_at)
@@ -61,7 +49,12 @@ class User {
 
   /** Authenticate: is this username/password valid? Returns boolean. */
 
-  static async authenticate(username, password) { }
+  static async authenticate(username, password) {
+
+    console.log(username)
+    console.log(password)
+
+  }
 
   /** Update last_login_at for user */
 
