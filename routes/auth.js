@@ -1,3 +1,9 @@
+
+const express = require("express");
+const router = new express.Router();
+
+const User = require("../models/user");
+
 /** POST /login - login: {username, password} => {token}
  *
  * Make sure to update their last-login!
@@ -11,3 +17,12 @@
  *
  *  Make sure to update their last-login!
  */
+
+router.post("/register", async function(req, res, next) {
+
+    
+
+
+})
+
+module.exports = router;
