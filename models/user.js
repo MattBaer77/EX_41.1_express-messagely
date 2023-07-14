@@ -54,6 +54,18 @@ class User {
     console.log(username)
     console.log(password)
 
+    const results = await db.query(
+      `SELECT username, password 
+       FROM users
+       WHERE username = $1`,
+      [username]);
+
+    const user = results.rows[0];
+
+    const resp = bcrypt.compare(password, user.password)
+
+    return resp
+
   }
 
   /** Update last_login_at for user */

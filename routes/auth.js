@@ -14,6 +14,15 @@ const { SECRET_KEY } = require("../config");
  *
  **/
 
+router.post("/login", async function(req, res, next) {
+
+    
+
+
+
+
+})
+
 
 /** POST /register - register user: registers, logs in, and returns token.
  *
