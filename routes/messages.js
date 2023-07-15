@@ -1,3 +1,8 @@
+const express = require("express");
+const router = new express.Router();
+
+const Message = require("../models/message");
+
 /** GET /:id - get detail of message.
  *
  * => {message: {id,
@@ -11,6 +16,19 @@
  *
  **/
 
+router.get("/:id", async function(req, res, next) {
+
+    try {
+
+        const message = await Message.get(req.params.id)
+
+        return res.json(message)
+
+    } catch(err) {
+        return next (err);
+    }
+
+})
 
 /** POST / - post message.
  *
@@ -28,3 +46,4 @@
  *
  **/
 
+module.exports = router;
