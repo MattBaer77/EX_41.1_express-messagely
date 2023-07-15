@@ -22,7 +22,7 @@ router.get("/:id", async function(req, res, next) {
 
         const message = await Message.get(req.params.id)
 
-        return res.json(message)
+        return res.json({message: message})
 
     } catch(err) {
         return next (err);
@@ -36,6 +36,26 @@ router.get("/:id", async function(req, res, next) {
  *   {message: {id, from_username, to_username, body, sent_at}}
  *
  **/
+
+router.post("/", async function(req, res , next) {
+
+    // try{
+
+    //     from_username = req.body.from_username
+    //     to_username = req.body.to_username
+    //     body = req.body.body
+
+    //     const message = await Message.create({from_username, to_username, body})
+
+    //     return res.json({message : message})
+
+    // } catch(err) {
+
+    //     return next(err)
+
+    // }
+
+})
 
 
 /** POST/:id/read - mark message as read:
