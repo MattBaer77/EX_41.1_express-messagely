@@ -77,4 +77,29 @@ router.post("/", ensureLoggedIn, async function(req, res , next) {
  *
  **/
 
+router.post("/:id/read", ensureLoggedIn, async function(req, res, next) {
+
+    try{
+
+        const message = await Message.get(req.params.id)
+
+        if (message.to_user.username == req.user.username) {
+
+            const returnMessage = await Message.markRead(req.params.id)
+
+            return res.json({message: {id: returnMessage.id, read_at: returnMessage.read_at}})
+
+        } else {
+
+            return next({ status: 401, message: "Unauthorized OOPs" });
+
+        }
+
+    } catch(err) {
+        return next(err)
+    }
+
+})
+
+
 module.exports = router;

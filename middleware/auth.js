@@ -41,23 +41,6 @@ function ensureCorrectUser(req, res, next) {
   }
 }
 
-// ** Middleware: Ensure To Or From. */
-
-// function ensureToOrFrom(req, res, next) {
-
-//   try{
-
-//     if (req.user.username == req.)
-
-//   } catch(err) {
-
-//     return next({ status: 401, message: "Unauthorized" });
-
-//   }
-
-
-// }
-
 // end
 
 module.exports = {
