@@ -3,6 +3,9 @@ const router = new express.Router();
 
 const Message = require("../models/message");
 
+const { ensureLoggedIn, ensureCorrectUser } = require("../middleware/auth");
+
+
 /** GET /:id - get detail of message.
  *
  * => {message: {id,
@@ -22,7 +25,22 @@ router.get("/:id", async function(req, res, next) {
 
         const message = await Message.get(req.params.id)
 
-        return res.json({message: message})
+        console.log(message.from_user.username)
+        console.log(message.to_user.username)
+        console.log(req.user.username)
+
+        if (message.from_user.username == req.user.username || message.to_user.username == req.user.username) {
+
+            console.log("good")
+
+            return res.json({message: message})
+            
+        } else {
+
+            return next({ status: 401, message: "Unauthorized OOP" });
+
+        }
+
 
     } catch(err) {
         return next (err);
